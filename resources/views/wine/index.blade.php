@@ -1,9 +1,92 @@
-
 <html>
 <head>
     <title>Wine Database</title>
-    {{ HTML::style('css/style.css') }}
 </head>
+
+<style>
+
+    body{
+        font-family: Helvetica;
+    }
+    #name{
+        float:left;
+        font-size:60px;
+        margin-right:40px;
+        font-weight:bolder;
+        color:white;
+        text-decoration:none;
+    }
+    #outercontainer{
+        background-color:#68000D;
+        margin:auto;
+        position:absolute;
+        padding-top:10px;
+        height:1200px;
+
+    }
+
+    .navlink {
+        float:left;
+        display: block;
+        width: 200px;
+        height: 40px;
+        margin-top: 25px;
+        color:white;
+        font-size: 30px;
+        text-align: center;
+        text-decoration: none;
+
+    }
+
+    .navlink:hover {
+        color:#F4DBD8;
+        text-decoration:underline;
+    }
+    #body{
+        margin:auto;
+        padding-top:20px;
+        padding-bottom:20px;
+        padding-left:150px;
+        padding-right:150px;
+    }
+
+    #form{
+        background-color:white;
+        color:black;
+        text-align:left;
+        margin-bottom:30px;
+        margin-left:20%;
+        padding-top:20px;
+        padding-left:40px;
+        font-size:20px;
+        width:60%;
+        height:400px;
+        position:relative;
+        line-height:2;
+    }
+    #labels{
+        float:left;
+        margin-right:30px;
+    }
+    #values{
+
+    }
+
+    .button{
+        margin-top:10px;
+        width:100px;
+        font-size:15px;
+        color: #68000D;
+        background: white;
+        font-weight: bold;
+        border: 1px solid #68000D;
+    }
+
+    .button:hover {
+        color: white;
+        background: #68000D;
+    }
+</style>
 
 
 <body style="background-color:#FFFACC">
@@ -16,7 +99,7 @@
         <a href="home.php" id="name"> Vinosaurus </a>
         <div style="margin:auto;">
             <a href="about.php" class="navlink">About Us</a>
-            <a href="wine_add.php" class="navlink">Add a Wine</a>
+            <a href="/winelist/add" class="navlink">Add a Wine</a>
 
 
     <img src="http://www.wineshoplouisville.com/images/wine.jpg" height="500" style="width:100%;opacity:0.8;">
@@ -47,37 +130,18 @@
                         <br/>
                         <select style="font-size:15px;font-family:times;width:200px;" name="grape_id">
                             <option value ="all"> All </option>
-<!--                            --><?php
-//                            while ($row = mysqli_fetch_array($results_grapes)){
-//                                echo "<option value='" . $row['grape_id'] . "'>";
-//                                echo $row['grape'];
-//                                echo "</option>";
-//                            }
-//                            ?>
                         </select>
                         <br/>
                         <input  style="font-size:15px;font-family:times;width:200px;" type ="text" name="year">
                         <br/>
                         <select style="font-size:15px;font-family:times;width:200px;" name="wine_type_id">
                             <option value ="all"> All </option>
-<!--                            --><?php
-//                            while ($row = mysqli_fetch_array($results_wine_types)){
-//                                echo "<option value='" . $row['wine_type_id'] . "'>";
-//                                echo $row['wine_type'];
-//                                echo "</option>";
-//                            }
-//                            ?>
+
                         </select>
                         <br/>
                         <select style="font-size:15px;font-family:times;width:200px;" name="country_id">
                             <option value ="all"> All </option>
-<!--                            --><?php
-//                            while ($row = mysqli_fetch_array($results_countries)){
-//                                echo "<option value='" . $row['country_id'] . "'>";
-//                                echo $row['country'];
-//                                echo "</option>";
-//                            }
-//                            ?>
+
                         </select>
                         <br/>
                         <input style="font-size:15px;font-family:times;width:250px;" name="price">

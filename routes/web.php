@@ -12,11 +12,28 @@
 */
 
 use App\Wine;
+use App\Country;
+use App\Grape;
+use App\Type;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 Route::get('/winelist', 'WineController@index');
 
 Route::get('/winelist/results', 'WineController@search');
+
+Route::get('/winelist/add', 'WineController@add');
+
+Route::post('/winelist/results', 'WineController@create');
+
+Route::get('winelist/{id}/delete', 'WineController@destroy');
+
+Route::get('/winelist/{id}', 'WineController@view');
+
+Route::post('/winelist/{id}', 'WineController@update');
+
+
+
+
