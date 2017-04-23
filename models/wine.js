@@ -6,13 +6,13 @@ var Country = require('./country');
 var Wine = bookshelf.Model.extend({
 	tableName: 'wine_list',
 	type: function() {
-		return this.belongsTo(Type)
+		return this.belongsTo(Type, 'wine_type_id', 'wine_type_id')
 	},
 	grape: function() {
-		return this.belongsTo(Grape);
+		return this.belongsTo(Grape, 'grape_id', 'grape_id');
 	},
 	country: function() {
-	return this.belongsTo(Country);
+	return this.belongsTo(Country, 'country_id', 'country_id');
 	}
 });
 
