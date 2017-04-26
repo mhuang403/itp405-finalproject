@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Wine;
+
 class Wine extends Model
 {
     protected $table = 'wine_list';

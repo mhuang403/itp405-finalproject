@@ -20,6 +20,21 @@ use App\Type;
 //    return view('welcome');
 //});
 
+Route::get('/', 'LoginController@index');
+Route::post('/', 'LoginController@login');
+
+Route::get('/signup', 'SignupController@index');
+Route::post('/signup', 'SignupController@signup');
+
+
+Route::get('/winelist', 'WineController@index')->middleware('protected');
+
+Route::get('/logout', 'LoginController@logout');
+
+Route::get('/user', function() {
+    return Auth::user();
+});
+
 Route::get('/winelist', 'WineController@index');
 
 Route::get('/winelist/results', 'WineController@search');
