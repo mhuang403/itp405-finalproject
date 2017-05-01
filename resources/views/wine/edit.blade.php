@@ -42,7 +42,17 @@
             </div>
             <div class="form-group">
                 <label for="grape">Grape: </label>
-                <input type="text" name="grape" id="grape" class="form-control" value="{{ $w->grape }}">
+                <select type="text" name="grape" id="grape" class="form-control">
+                    @foreach ($grapes as $grape)
+                        @if ($grape->grape_id === $w->grape_id)
+                            <option value="{{ $grape->grape_id }}" selected>
+                        @else
+                            <option value="{{ $grape->grape_id }}">
+                                @endif
+                            {{ $grape->grape }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label for="year">Year:</label>
@@ -67,7 +77,17 @@
             </div>
             <div class="form-group">
                 <label for="country">Country:</label>
-                <input type="text" name="country" id="country" class="form-control" value="{{ $w->country }}">
+                <select type="text" name="country" id="country" class="form-control">
+                    @foreach ($country as $c)
+                        @if ($c->country_id === $w->country_id)
+                            <option value="{{ $c->country_id }}" selected>
+                        @else
+                            <option value="{{ $c->country_id }}">
+                                @endif
+                            {{ $c->country }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label for="price">Price</label>

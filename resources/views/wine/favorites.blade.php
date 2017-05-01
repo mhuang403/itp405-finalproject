@@ -8,19 +8,19 @@
 </head>
 
 <style>
-body {
-    background-color: #68000D;
-}
+    body {
+        background-color: #68000D;
+    }
 
-h1 {
-    color:#FFF;
-}
+    h1 {
+        color: #FFF;
+    }
 
-.table {
-    background-color: #FFFACC;
-    border-radius: 20px;
-    margin-top: 20px;
-}
+    .table {
+        background-color: #FFFACC;
+        border-radius: 20px;
+        margin-top: 20px;
+    }
 </style>
 
 <body>
@@ -30,9 +30,8 @@ h1 {
             {{ session('successStatus') }}
         </div>
     @endif
-<h1>Results</h1>
+<h1>Favorites</h1>
         <p><a href="/winelist"><< Back to search</a></p>
-        <p><a href="/winelist/favorites">View favorites</a></p>
     <table class="table">
         <thead>
         <tr>
@@ -42,7 +41,6 @@ h1 {
             <th>Wine Type</th>
             <th>Country</th>
             <th>Price</th>
-            <th></th>
             <th></th>
         </tr>
         </thead>
@@ -55,8 +53,7 @@ h1 {
                 <td>{{ $w->wine_type }}</td>
                 <td>{{ $w->country }}</td>
                 <td>${{ $w->price }}</td>
-                <td><a href="/winelist/{{ $w->wine_id }}/delete" class="btn">Delete</a></td>
-                <td><a href="/winelist/{{ $w->wine_id }}/favorite" class="btn">Favorite</a></td>
+                <td><a href="/winelist/{{ $w->wine_id }}/remove" class="btn">Remove from Favorites</a></td>
             </tr>
         @endforeach
         </tbody>

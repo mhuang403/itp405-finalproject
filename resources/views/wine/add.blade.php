@@ -42,7 +42,13 @@
             </div>
             <div class="form-group">
                 <label for="grape">Grape: </label>
-                <input type="text" name="grape" id="grape" class="form-control" value="{{ old('grape') }}">
+                <select type="text" name="grape" id="grape" class="form-control">
+                    @foreach ($grapes as $grape)
+                        <option value="{{ $grape->grape_id }}">
+                            {{ $grape->grape }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label for="year">Year:</label>
@@ -63,7 +69,13 @@
             </div>
             <div class="form-group">
                 <label for="country">Country:</label>
-                <input type="text" name="country" id="country" class="form-control" value="{{ old('country') }}">
+                <select type="text" name="country" id="country" class="form-control">
+                    @foreach ($country as $c)
+                        <option value="{{ $c->country_id }}">
+                            {{ $c->country }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label for="price">Price</label>

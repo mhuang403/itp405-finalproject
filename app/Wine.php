@@ -4,13 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Wine;
 
 class Wine extends Model
 {
     protected $table = 'wine_list';
 
     protected $primaryKey = 'wine_id';
+
+    public $timestamps = false;
 
     public function type()
     {

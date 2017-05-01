@@ -91,6 +91,7 @@
         <div style="margin:auto;">
             <a href="/about" class="navlink">About Us</a>
             <a href="/winelist/add" class="navlink">Add a Wine</a>
+            <a href="/winelist/favorites" class="navlink">Favorites</a>
 
 
             <img src="http://www.wineshoplouisville.com/images/wine.jpg" height="500" style="width:100%;opacity:0.8;">
