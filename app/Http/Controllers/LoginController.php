@@ -22,7 +22,7 @@ class LoginController extends Controller
         if ($loginWasSuccessful) {
             return redirect('/winelist');
         } else {
-            return redirect('/signup');
+            return redirect('/')->with('error', 'Incorrect username or password. Please try again');
         }
     }
 

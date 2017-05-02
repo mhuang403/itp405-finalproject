@@ -11,7 +11,9 @@
     body {
         background-color: #68000D;
     }
-
+    h1{
+        color:#FFF;
+    }
     .form {
         background-color: #FFFACC;
         border-radius: 20px;
@@ -32,7 +34,8 @@
             </ul>
         </div>
     @endif
-
+        <h1>Add</h1>
+        <p><a href="/winelist"><< Back to search</a></p>
 
         <form action="/winelist/results" method="post" class="form">
             {{ csrf_field() }}
@@ -43,12 +46,12 @@
             <div class="form-group">
                 <label for="grape">Grape: </label>
                 <select type="text" name="grape" id="grape" class="form-control">
-                    @foreach ($grapes as $grape)
-                        <option value="{{ $grape->grape_id }}">
-                            {{ $grape->grape }}
-                        </option>
-                    @endforeach
-                </select>
+                                        @foreach ($grapes as $grape)
+                                                <option value="{{ $grape->grape_id }}">
+                                                    {{ $grape->grape }}
+                                                </option>
+                                            @endforeach
+                                    </select>
             </div>
             <div class="form-group">
                 <label for="year">Year:</label>

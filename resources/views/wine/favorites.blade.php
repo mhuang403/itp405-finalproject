@@ -30,6 +30,7 @@
             {{ session('successStatus') }}
         </div>
     @endif
+
 <h1>Favorites</h1>
         <p><a href="/winelist"><< Back to search</a></p>
     <table class="table">

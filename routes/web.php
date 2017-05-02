@@ -20,9 +20,9 @@ use App\Type;
 //    return view('welcome');
 //});
 
-DB::listen(function ($query) {
-    var_dump($query->sql);
-});
+//DB::listen(function ($query) {
+//    var_dump($query->sql);
+//});
 
 Route::get('/', 'LoginController@index');
 Route::post('/', 'LoginController@login');
@@ -41,10 +41,10 @@ Route::get('/user', function() {
 
 Route::get('/winelist', 'WineController@index');
 
+Route::get('/about', 'WineController@about');
+
 Route::get('/winelist/results', 'WineController@search');
-
 Route::get('/winelist/favorites', 'WineController@favorites');
-
 Route::get('/winelist/add', 'WineController@add');
 
 Route::post('/winelist/results', 'WineController@create');
@@ -56,7 +56,8 @@ Route::get('/winelist/{id}', 'WineController@view');
 Route::post('/winelist/{id}', 'WineController@update');
 
 Route::get('/winelist/{id}/favorite', 'WineController@addtolist');
-
 Route::get('/winelist/{id}/remove', 'WineController@removefromlist');
+
+
 
 

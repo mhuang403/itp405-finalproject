@@ -10,14 +10,19 @@
 <style>
     body {
         background-color: #68000D;
-    }
 
+    }
+    h1 {
+        color: #FFF;
+    }
     .form {
         background-color: #FFFACC;
         border-radius: 20px;
         margin: 20px;
         padding: 20px;
     }
+
+
 </style>
 
 <body>
@@ -32,7 +37,8 @@
             </ul>
         </div>
     @endif
-
+        <h1>Edit</h1>
+        <p><a href="/winelist"><< Back to search</a></p>
     @foreach ($wine as $w)
         <form action="/winelist/{{  $w->wine_id }}" method="post" class="form">
             {{ csrf_field() }}
@@ -46,12 +52,12 @@
                     @foreach ($grapes as $grape)
                         @if ($grape->grape_id === $w->grape_id)
                             <option value="{{ $grape->grape_id }}" selected>
-                        @else
+                                @else
                             <option value="{{ $grape->grape_id }}">
                                 @endif
-                            {{ $grape->grape }}
-                        </option>
-                    @endforeach
+                                {{ $grape->grape }}
+                            </option>
+                            @endforeach
                 </select>
             </div>
             <div class="form-group">
@@ -70,7 +76,7 @@
                                 @endif
                                 {{ $type->wine_type }}
                             </option>
-                            @endforeach
+                     @endforeach
                 </select>
 
                 {{--<input type="text" name="type" id="type" class="form-control" value="{{ $w->wine_type }}">--}}
@@ -81,11 +87,11 @@
                     @foreach ($country as $c)
                         @if ($c->country_id === $w->country_id)
                             <option value="{{ $c->country_id }}" selected>
-                        @else
+                                @else
                             <option value="{{ $c->country_id }}">
                                 @endif
-                            {{ $c->country }}
-                        </option>
+                                {{ $c->country }}
+                            </option>
                     @endforeach
                 </select>
             </div>

@@ -33,6 +33,14 @@ class WineController extends Controller
             'country' => $country,
         ]);
     }
+
+    public function about()
+    {
+        return view('wine.about', [
+        'user' => Auth::user()
+    ]);
+    }
+
     public function search()
     {
 //        $validation = Validator::make($request->all()
@@ -43,162 +51,246 @@ class WineController extends Controller
         $grape = request('grape_id');
         $country = request('country_id');
         $wine_type = request('wine_type_id');
-      $wine = DB::table('wine_list')
-                ->orderBy('wine_id')
-                ->get();
+//      $wine = DB::table('wine_list')
+//                ->orderBy('wine_id')
+//                ->get();
 
-        $results = DB::table('wine_list')
-            ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
-            ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
-            ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
-            ->where('wine_list.name', 'LIKE' , "%$name%")
-            ->where('wine_list.year', 'LIKE' , $year)
-            ->where('wine_list.price', 'LIKE' , $price);
+//        $wine = DB::table('wine_list')
+//            ->orderBy('wine_id')
 //            ->get();
 
+//        $results = DB::table('wine_list')
+//            ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
+//            ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
+//            ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
+//            ->where('wine_list.name', 'LIKE' , "%$name%")
+//            ->where('wine_list.year', 'LIKE' , $year)
+//            ->where('wine_list.price', 'LIKE' , $price);
+//
+//        $grapes = $results->where('grapes.grape_id', '=', $grape);
+//        $countries = $results->where('countries.country_id', '=', $country);
+//        $types = $results->where('wine_types.wine_type_id', '=', $wine_type);
+//
+//         if($name OR $year OR $price == NULL) {
+//            $wine = DB::table('wine_list')
+//            ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
+//            ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
+//            ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
+//            ->get();
+//         }
+//        if ($grape != 'all') {
+//            $wine = $grapes->get();
+//        }elseif ($country != 'all') {
+//            $wine =$countries->get();
+//        }elseif ($wine_type != 'all') {
+//            $wine =$types->get();
+//        }elseif ($grape != 'all' && $country != 'all') {
+//            $wine =$grapes->where('countries.country_id', '=', $country)->get();
+//        }elseif ($wine_type != 'all' && $grape != 'all') {
+//            $wine =$types->where('grapes.grape_id', '=', $grape)->get();
+//        }elseif ($wine_type != 'all' && $country != 'all') {
+//            $wine =$types->where('countries.country_id', '=', $country)->get();
+//        }elseif ($wine_type != 'all' && $country != 'all' && $grape != 'all') {
+//            $wine =$types->where('grapes.grape_id', '=', $grape)->where('countries.country_id', '=', $country)->get();
+//        }
+//        else{
+//            $wine = $results->get();
+//        }
 
-        $grapes = $results->where('grapes.grape_id', '=', $grape);
-
-        $countries = $grapes->where('countries.country_id', '=', $country);
-
-        $types = $countries->where('wine_types.wine_type_id', '=', $wine_type);
-
-        if ($name OR $year OR $price == NULL)
-        {
+        if ($grape != 'all' && $country == 'all' && $wine_type == 'all') {
             $wine = DB::table('wine_list')
                 ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
                 ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
                 ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
-//                ->where('grapes.grape_id', '=', $grape)
-//                ->orwhere('countries.country_id', '=', $country)
-//                ->orwhere('wine_types.wine_type_id', '=', $wine_type)
+                ->where('wine_list.name', 'LIKE' , "%$name%")
+                ->where('wine_list.year', 'LIKE' , $year)
+                ->where('wine_list.price', 'LIKE' , $price)
+                ->where('grapes.grape_id', '=', $grape)
+                ->get();
+        }
+        elseif ($country != 'all' && $wine_type == 'all' && $grape == 'all') {
+            $wine = DB::table('wine_list')
+                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
+                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
+                ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
+                ->where('wine_list.name', 'LIKE' , "%$name%")
+                ->where('wine_list.year', 'LIKE' , $year)
+                ->where('wine_list.price', 'LIKE' , $price)
+                ->where('countries.country_id', '=', $country)
+                ->get();
+        }
+        elseif ($wine_type != 'all' && $grape == 'all' && $country == 'all') {
+            $wine = DB::table('wine_list')
+                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
+                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
+                ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
+                ->where('wine_list.name', 'LIKE' , "%$name%")
+                ->where('wine_list.year', 'LIKE' , $year)
+                ->where('wine_list.price', 'LIKE' , $price)
+                ->where('wine_types.wine_type_id', '=', $wine_type)
+                ->get();
+        }
+        elseif ($wine_type != 'all' && $grape != 'all') {
+            $wine = DB::table('wine_list')
+                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
+                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
+                ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
+                ->where('wine_list.name', 'LIKE' , "%$name%")
+                ->where('wine_list.year', 'LIKE' , $year)
+                ->where('wine_list.price', 'LIKE' , $price)
+                ->where('wine_types.wine_type_id', '=', $wine_type)
+                ->where('grapes.grape_id', '=', $grape)
+                ->get();
+        }
+        elseif ($wine_type != 'all' && $country != 'all') {
+            $wine = DB::table('wine_list')
+                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
+                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
+                ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
+                ->where('wine_list.name', 'LIKE' , "%$name%")
+                ->where('wine_list.year', 'LIKE' , $year)
+                ->where('wine_list.price', 'LIKE' , $price)
+                ->where('wine_types.wine_type_id', '=', $wine_type)
+                ->where('countries.country_id', '=', $country)
+                ->get();
+        }
+        elseif ($grape != 'all' && $country != 'all') {
+            $wine = DB::table('wine_list')
+                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
+                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
+                ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
+                ->where('wine_list.name', 'LIKE' , "%$name%")
+                ->where('wine_list.year', 'LIKE' , $year)
+                ->where('wine_list.price', 'LIKE' , $price)
+                ->where('grapes.grape_id', '=', $grape)
+                ->where('countries.country_id', '=', $country)
+                ->get();
+        }
+        elseif ($wine_type != 'all' && $country != 'all' && $grape != 'all') {
+            $wine = DB::table('wine_list')
+                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
+                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
+                ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
+                ->where('wine_list.name', 'LIKE' , "%$name%")
+                ->where('wine_list.year', 'LIKE' , $year)
+                ->where('wine_list.price', 'LIKE' , $price)
+                ->where('wine_types.wine_type_id', '=', $wine_type)
+                ->where('grapes.grape_id', '=', $grape)
+                ->where('countries.country_id', '=', $country)
                 ->get();
         }
 
-        if ($grape != 'all') {
-//                $wine = DB::table('wine_list')
-//                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
-//                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
-//                ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
-//                ->where('wine_list.name', 'LIKE' , "%$name%")
-//                ->where('wine_list.year', 'LIKE' , $year)
-//                ->where('wine_list.price', 'LIKE' , $price)
-//                ->where('grapes.grape_id', '=', $grape)
-//                ->get();
-
-        $grapes->get();
+        elseif($name != NULL && $year != NULL) {
+            $wine = DB::table('wine_list')
+                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
+                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
+                ->leftjoin('wine_types', 'wine_list.wine_type_id', '=', 'wine_types.wine_type_id')
+                ->where('wine_list.name', 'LIKE' , "%$name%")
+                ->where('wine_list.year', 'LIKE' , $year)
+                ->get();
         }
-        elseif ($country != 'all') {
-//            $wine = DB::table('wine_list')
-//                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
-//                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
-//                ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
-//                ->where('wine_list.name', 'LIKE' , "%$name%")
-//                ->where('wine_list.year', 'LIKE' , $year)
-//                ->where('wine_list.price', 'LIKE' , $price)
-//                ->where('countries.country_id', '=', $country)
-//                ->get();
-            $countries->get();
-
+        elseif($name != NULL && $price != NULL) {
+            $wine = DB::table('wine_list')
+                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
+                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
+                ->leftjoin('wine_types', 'wine_list.wine_type_id', '=', 'wine_types.wine_type_id')
+                ->where('wine_list.name', 'LIKE' , "%$name%")
+                ->where('wine_list.price', 'LIKE' , $price)
+                ->get();
         }
-        elseif ($wine_type != 'all') {
-//            $wine = DB::table('wine_list')
-//                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
-//                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
-//                ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
-//                ->where('wine_list.name', 'LIKE' , "%$name%")
-//                ->where('wine_list.year', 'LIKE' , $year)
-//                ->where('wine_list.price', 'LIKE' , $price)
-//                ->where('wine_types.wine_type_id', '=', $wine_type)
-//                ->get();
-            $types->get();
-
+        elseif($year != NULL && $price != NULL) {
+            $wine = DB::table('wine_list')
+                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
+                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
+                ->leftjoin('wine_types', 'wine_list.wine_type_id', '=', 'wine_types.wine_type_id')
+                ->where('wine_list.year', 'LIKE' , $year)
+                ->where('wine_list.price', 'LIKE' , $price)
+                ->get();
         }
-//        elseif ($wine_type != 'all' && $grape != 'all') {
-//            $wine = DB::table('wine_list')
-//                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
-//                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
-//                ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
-//                ->where('wine_list.name', 'LIKE' , "%$name%")
-//                ->where('wine_list.year', 'LIKE' , $year)
-//                ->where('wine_list.price', 'LIKE' , $price)
-//                ->where('wine_types.wine_type_id', '=', $wine_type)
-//                ->where('grapes.grape_id', '=', $grape)
-//                ->get();
-//        }
-//        elseif ($wine_type != 'all' && $country != 'all') {
-//            $wine = DB::table('wine_list')
-//                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
-//                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
-//                ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
-//                ->where('wine_list.name', 'LIKE' , "%$name%")
-//                ->where('wine_list.year', 'LIKE' , $year)
-//                ->where('wine_list.price', 'LIKE' , $price)
-//                ->where('wine_types.wine_type_id', '=', $wine_type)
-//                ->where('countries.country_id', '=', $country)
-//                ->get();
-//        }
-//        elseif ($grape != 'all' && $country != 'all') {
-//            $wine = DB::table('wine_list')
-//                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
-//                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
-//                ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
-//                ->where('wine_list.name', 'LIKE' , "%$name%")
-//                ->where('wine_list.year', 'LIKE' , $year)
-//                ->where('wine_list.price', 'LIKE' , $price)
-//                ->where('grapes.grape_id', '=', $grape)
-//                ->where('countries.country_id', '=', $country)
-//                ->get();
-//        }
-//        elseif ($wine_type != 'all' && $country != 'all' && $grape != 'all') {
-//            $wine = DB::table('wine_list')
-//                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
-//                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
-//                ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
-//                ->where('wine_list.name', 'LIKE' , "%$name%")
-//                ->where('wine_list.year', 'LIKE' , $year)
-//                ->where('wine_list.price', 'LIKE' , $price)
-//                ->where('wine_types.wine_type_id', '=', $wine_type)
-//                ->where('grapes.grape_id', '=', $grape)
-//                ->where('countries.country_id', '=', $country)
-//                ->get();
-//        }
+        elseif($name != NULL) {
+            $wine = DB::table('wine_list')
+                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
+                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
+                ->leftjoin('wine_types', 'wine_list.wine_type_id', '=', 'wine_types.wine_type_id')
+                ->where('wine_list.name', 'LIKE' , "%$name%")
+                ->get();
+        }
+        elseif($year != NULL) {
+            $wine = DB::table('wine_list')
+                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
+                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
+                ->leftjoin('wine_types', 'wine_list.wine_type_id', '=', 'wine_types.wine_type_id')
+                ->where('wine_list.year', 'LIKE' , $year)
+                ->get();
+        }
+
+        elseif($price != NULL) {
+            $wine = DB::table('wine_list')
+                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
+                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
+                ->leftjoin('wine_types', 'wine_list.wine_type_id', '=', 'wine_types.wine_type_id')
+                ->where('wine_list.price', 'LIKE' , $price)
+                ->get();
+        }
+        elseif($name OR $year OR $price == NULL) {
+            $wine = DB::table('wine_list')
+                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
+                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
+                ->leftjoin('wine_types', 'wine_list.wine_type_id', '=', 'wine_types.wine_type_id')
+                ->get();
+        }
         else{
-//            $wine = DB::table('wine_list')
-//                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
-//                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
-//                ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
-////                ->where('wine_list.name', 'LIKE' , "%$name%")
-////                ->where('wine_list.year', 'LIKE' , $year)
-////                ->where('wine_list.price', 'LIKE' , $price)
-//                ->get();
-
-            $results->get();
+            $wine = DB::table('wine_list')
+                ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
+                ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
+                ->leftjoin('wine_types', 'wine_list.wine_type_id' , '=', 'wine_types.wine_type_id')
+                ->where('wine_list.name', 'LIKE' , "%$name%")
+                ->where('wine_list.year', 'LIKE' , $year)
+                ->where('wine_list.price', 'LIKE' , $price)
+                ->get();
         }
-        //  elseif($price != '')
-//                $wine = DB::table('wine_list')
-//                    ->where('year', '=', $year)
-//                    ->where('name', 'LIKE' , "%$name%")
-//             //       ->where('price', '=' , $price)
-////                    ->where('grape_id', '=', $grape)
-//                    ->get();
-//            }
-//            else{
-//                $wine = DB::table('wine_list')
-//                    ->get();
-//
-//            }
-//        $wine = DB::table('wine_list')
-//            ->orderBy('wine_id')
-//            ->get();
+
+
+
+        $red = DB::table('wine_list')->where('wine_list.wine_type_id', '=', '2')
+            ->get();
+        $red = count($red);
+
+        $white = DB::table('wine_list')->where('wine_list.wine_type_id', '=', '3')
+            ->get();
+        $white = count($white);
+
+        $sparkling = DB::table('wine_list')->where('wine_list.wine_type_id', '=', '4')
+            ->get();
+        $sparkling = count($sparkling);
+
+        $rose = DB::table('wine_list')->where('wine_list.wine_type_id', '=', '5')
+            ->get();
+        $rose = count($rose);
+
+        $port = DB::table('wine_list')->where('wine_list.wine_type_id', '=', '6')
+            ->get();
+        $port = count($port);
+
+        $dessert = DB::table('wine_list')->where('wine_list.wine_type_id', '=', '7')
+            ->get();
+        $dessert = count($dessert);
+
+
+
         return view('wine.results', [
             'wine' => $wine,
+            'red' => $red,
+            'white' => $white,
+            'sparkling' => $sparkling,
+            'rose' => $rose,
+            'port' => $port,
+            'dessert' => $dessert,
             'grape' => $grape,
             'wine_type' => $wine_type,
             'country' => $country
 
         ]);
-
     }
 
 
@@ -232,6 +324,7 @@ class WineController extends Controller
             ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
             ->leftjoin('wine_types', 'wine_list.wine_type_id', '=', 'wine_types.wine_type_id')
             ->get();
+
         return view('wine.edit', [
             'wine' => $viewWine,
             'types' => $type,
@@ -270,7 +363,7 @@ class WineController extends Controller
                         'grape_id' => request('grape')
                     ]);
 
-            return redirect('/winelist/results')
+            return redirect('/winelist/results?name=&grape_id=all&year=&wine_type_id=all&country_id=all&price=')
                 ->with('successStatus', 'Wine was updated successfully');
 
         } else {
@@ -323,7 +416,7 @@ class WineController extends Controller
                         'grape_id' => request('grape')
                     ]);
 
-            return redirect('/winelist/results')
+            return redirect('/winelist/results?name=&grape_id=all&year=&wine_type_id=all&country_id=all&price=')
                 ->with('successStatus', 'Wine was added successfully');
 
         } else {
@@ -340,53 +433,51 @@ class WineController extends Controller
         $wine = Wine::find($id);
         $wine->delete();
 
-        return redirect('/winelist/results')
+        return redirect('/winelist/results?name=&grape_id=all&year=&wine_type_id=all&country_id=all&price=')
             ->with('successStatus', 'Wine was successfully deleted');
     }
 
     public function favorites()
-    {
-        $type = DB::table('wine_types')->get();
-        $c = DB::table('countries')->get();
-        $grape = DB::table('grapes')->get();
+     {
+         $type = DB::table('wine_types')->get();
+         $c = DB::table('countries')->get();
+         $grape = DB::table('grapes')->get();
 
-        $viewWine = DB::table('wine_list')
-            ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
-            ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
-            ->leftjoin('wine_types', 'wine_list.wine_type_id', '=', 'wine_types.wine_type_id')
+         $viewWine = DB::table('wine_list')
+             ->leftjoin('grapes', 'wine_list.grape_id', '=', 'grapes.grape_id')
+             ->leftjoin('countries', 'wine_list.country_id', '=', 'countries.country_id')
+             ->leftjoin('wine_types', 'wine_list.wine_type_id', '=', 'wine_types.wine_type_id')
             ->where('favorite', '=', '1')
             ->get();
-        return view('wine.favorites', [
-            'wine' => $viewWine,
-            'types' => $type,
-            'country' => $c,
-            'grapes' => $grape
-        ]);
+         return view('wine.favorites', [
+             'wine' => $viewWine,
+             'types' => $type,
+             'country' => $c,
+             'grapes' => $grape
+         ]);
 
-    }
+     }
 
     public function addtolist($id)
-    {
-       $favorite =  Wine::find($id);
-           $favorite->favorite = 1;
-            $favorite->save();
+     {
+          $favorite =  Wine::find($id);
+        $favorite->favorite = 1;
+                $favorite->save();
 
-        return redirect('/winelist/results')
-            ->with('successStatus', 'Wine was successfully added to favorites');
+            return redirect('/winelist/favorites')
+                ->with('successStatus', 'Wine was successfully added to favorites');
 
-    }
+     }
 
-    public function removefromlist($id)
-    {
-        $removefave = Wine::find($id);
-        $removefave->favorite = 0;
-        $removefave->save();
+     public function removefromlist($id)
+     {
+            $removefave = Wine::find($id);
+            $removefave->favorite = 0;
+            $removefave->save();
 
-        return redirect('/winelist/favorites')
-            ->with('successStatus', 'Wine was successfully removed from favorites');
-
-    }
-
+            return redirect('/winelist/favorites')
+               ->with('successStatus', 'Wine was successfully removed from favorites');
+     }
 
 }
 

@@ -9,8 +9,8 @@
     }
     #name{
         float:left;
-        font-size:60px;
-        margin-right:40px;
+        font-size:50px;
+        margin-right:25px;
         font-weight:bolder;
         color:white;
         text-decoration:none;
@@ -20,16 +20,15 @@
         margin:auto;
         position:absolute;
         padding-top:10px;
-        height:1200px;
     }
     .navlink {
         float:left;
         display: block;
-        width: 200px;
+        width: 140px;
         height: 40px;
         margin-top: 25px;
         color:white;
-        font-size: 30px;
+        font-size: 25px;
         text-align: center;
         text-decoration: none;
     }
@@ -39,10 +38,7 @@
     }
     #body{
         margin:auto;
-        padding-top:20px;
-        padding-bottom:20px;
-        padding-left:150px;
-        padding-right:150px;
+
     }
     #form{
         background-color:white;
@@ -60,7 +56,7 @@
     }
     #labels{
         float:left;
-        margin-right:30px;
+        margin-right:15px;
     }
     #values{
     }
@@ -77,22 +73,40 @@
         color: white;
         background: #68000D;
     }
+    #user{
+        font-family:Helvetica;
+        font-size:25px;
+        color:white;
+        position:relative;
+        float:left;
+        padding-top:25px;
+        margin-left:40px;
+        }
+    #links{
+        float:left;
+        /*padding-right:100px;*/
+    }
+    #logout{
+        float:right;
+        width:140px;
+        /*margin-right:10px;*/
+
+    }
 </style>
-
-
 <body style="background-color:#FFFACC">
 
 <div id="outercontainer">
-
-
-
     <div style="position:relative;padding-left:30px;padding-right:30px;">
         <a href="/winelist" id="name"> Vinosaurus </a>
-        <div style="margin:auto;">
+        <div id="links" style="margin:auto;">
             <a href="/about" class="navlink">About Us</a>
             <a href="/winelist/add" class="navlink">Add a Wine</a>
             <a href="/winelist/favorites" class="navlink">Favorites</a>
-
+        </div><!--close intro-->
+            <div id="user">Hello, {{ $user->email }}
+            </div>
+        <div id="logout"><a href="/logout" class="navlink">Logout</a>
+        </div>
 
             <img src="http://www.wineshoplouisville.com/images/wine.jpg" height="500" style="width:100%;opacity:0.8;">
 
@@ -165,7 +179,7 @@
                         </div><!--close values-->
                     </div><!--close form-->
                     <hr>
-                </div><!--close intro-->
+
             </div><!--close body-->
         </div> <!--close outercontainer-->
 
